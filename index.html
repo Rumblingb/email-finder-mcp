@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Finder MCP — Find & Verify Emails via AI</title>
+    <meta name="description" content="Email Finder MCP: Find and verify email addresses using AI assistants like Claude. FREE tier available, PRO at $19/mo.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .logo-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: bold; color: white;
+        }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: #f0f0f0; }
+        header h1 { font-size: 2.75rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
+        header h1 span { background: linear-gradient(135deg, #6366f1, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { font-size: 1.15rem; color: #888; max-width: 600px; margin: 0 auto; }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #a78bfa;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: #13131a;
+            border: 1px solid #1e1e2a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 { font-size: 1.35rem; color: #fff; margin-bottom: 1rem; }
+        .card h2 .emoji { margin-right: 0.5rem; }
+        .card p { color: #999; margin-bottom: 1rem; }
+
+        /* Feature Grid */
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+        .feature {
+            background: #13131a;
+            border: 1px solid #1e1e2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .feature h3 { font-size: 1rem; color: #fff; margin-bottom: 0.5rem; }
+        .feature h3 .icon { margin-right: 0.4rem; }
+        .feature p { font-size: 0.9rem; color: #777; }
+        .feature .code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.08);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Pricing */
+        .pricing {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .plan {
+            background: #13131a;
+            border: 1px solid #1e1e2a;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .plan.featured {
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #13131a 0%, #1a1a2e 100%);
+        }
+        .plan.featured::before {
+            content: 'POPULAR';
+            position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%);
+            background: #6366f1; color: white;
+            padding: 0.25rem 1rem; border-radius: 100px;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .plan .name { font-size: 1.1rem; color: #aaa; margin-bottom: 0.5rem; }
+        .plan .price { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
+        .plan .price span { font-size: 1rem; color: #666; font-weight: 400; }
+        .plan .desc { color: #777; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .plan ul { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+        .plan ul li { padding: 0.4rem 0; color: #aaa; font-size: 0.9rem; }
+        .plan ul li::before { content: '✓ '; color: #6366f1; font-weight: bold; }
+        .plan ul li.muted { color: #555; }
+        .plan ul li.muted::before { content: '— '; color: #444; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99,102,241,0.35); }
+        .btn-secondary {
+            background: transparent;
+            color: #ccc;
+            border: 1px solid #2a2a3a;
+        }
+        .btn-secondary:hover { background: #1a1a2a; }
+
+        .stripe-buy {
+            background: linear-gradient(135deg, #6772e5, #8b5cf6);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+        .stripe-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.4); }
+
+        /* Code block */
+        .code-block {
+            background: #0d0d14;
+            border: 1px solid #1e1e2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block .comment { color: #555; }
+        .code-block .keyword { color: #6366f1; }
+        .code-block .string { color: #a78bfa; }
+        .code-block .function { color: #34d399; }
+
+        /* Footer */
+        footer { text-align: center; padding: 3rem 0; color: #555; font-size: 0.85rem; }
+        footer a { color: #6366f1; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .features { grid-template-columns: 1fr; }
+            .pricing { grid-template-columns: 1fr; }
+            header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">MCP Server for AI Assistants</div>
+            <div class="logo">
+                <div class="logo-icon">@</div>
+                <span class="logo-text">Email Finder</span>
+            </div>
+            <h1>Find &amp; Verify Emails<br><span>Using AI Assistants</span></h1>
+            <p>Email Finder MCP gives Claude, Cursor, and other AI assistants the superpower to find and verify email addresses — directly from your conversations.</p>
+        </header>
+
+        <div class="features">
+            <div class="feature">
+                <h3><span class="icon">🔍</span>find_email</h3>
+                <p>Find likely email from name + domain</p>
+                <span class="code">find_email("John", "Doe", "acme.com")</span>
+            </div>
+            <div class="feature">
+                <h3><span class="icon">✅</span>verify_email</h3>
+                <p>Verify email via MX + SMTP check</p>
+                <span class="code">verify_email("john@acme.com")</span>
+            </div>
+            <div class="feature">
+                <h3><span class="icon">🏢</span>find_company_emails</h3>
+                <p>Discover email patterns at any company</p>
+                <span class="code">find_company_emails("Acme Corp")</span>
+            </div>
+            <div class="feature">
+                <h3><span class="icon">📊</span>check_rate_limit</h3>
+                <p>Check remaining free API calls</p>
+                <span class="code">check_rate_limit("client-id")</span>
+            </div>
+        </div>
+
+        <!-- Pricing -->
+        <h2 style="color:#fff; font-size:1.5rem; text-align:center; margin-bottom:0.5rem;">Simple Pricing</h2>
+        <p style="text-align:center; color:#777; margin-bottom:2rem;">Start free, upgrade when you need more.</p>
+
+        <div class="pricing">
+            <div class="plan">
+                <div class="name">Free</div>
+                <div class="price">$0<span>/mo</span></div>
+                <div class="desc">For trying it out</div>
+                <ul>
+                    <li>50 lookups per month</li>
+                    <li>All 3 tools included</li>
+                    <li>Pattern-based email finding</li>
+                    <li>SMTP email verification</li>
+                    <li class="muted">Rate limit resets monthly</li>
+                </ul>
+                <a href="#" class="btn btn-secondary" onclick="event.preventDefault(); alert('You are already on the Free plan. Start using Email Finder MCP with Claude or Cursor!');">Current Plan</a>
+            </div>
+            <div class="plan featured">
+                <div class="name">PRO</div>
+                <div class="price">$19<span>/mo</span></div>
+                <div class="desc">For power users &amp; teams</div>
+                <ul>
+                    <li>Unlimited lookups</li>
+                    <li>All 3 tools included</li>
+                    <li>Priority SMTP verification</li>
+                    <li>Dedicated API key</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://buy.stripe.com/fZu14p8XtgAk6DKa791oI0D" class="stripe-buy">
+                    Subscribe Now — $19/mo
+                </a>
+            </div>
+        </div>
+
+        <!-- How to use -->
+        <div class="card">
+            <h2><span class="emoji">🚀</span>Get Started in 2 Minutes</h2>
+            <p>Add Email Finder MCP to <strong>Claude Desktop, Cursor, Windsurf,</strong> or any MCP-compatible client.</p>
+
+            <h3 style="color:#ccc; font-size:1rem; margin: 1rem 0 0.5rem;">Claude Desktop Config</h3>
+            <div class="code-block">
+                <span class="comment"># ~/Library/Application Support/Claude/claude_desktop_config.json</span><br>
+                {<br>
+                &nbsp;&nbsp;"mcpServers": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"email-finder": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": <span class="string">"python3"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": [<span class="string">"-m", "email_finder_mcp"</span>],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cwd": <span class="string">"/path/to/email-finder-mcp"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+
+            <h3 style="color:#ccc; font-size:1rem; margin: 1rem 0 0.5rem;">Or install via pip</h3>
+            <div class="code-block">
+                <span class="comment"># Coming soon to PyPI</span><br>
+                git clone https://github.com/Rumblingb/email-finder-mcp.git<br>
+                cd email-finder-mcp<br>
+                python3 -m venv venv<br>
+                source venv/bin/activate<br>
+                pip install -e .
+            </div>
+        </div>
+
+        <!-- Why Email Finder -->
+        <div class="card">
+            <h2><span class="emoji">💡</span>Why Email Finder MCP?</h2>
+            <p><strong>No more context switching.</strong> Instead of opening Hunter.io, Apollo, or any other tool in your browser — just ask your AI assistant directly.</p>
+            <p>Your AI can find emails, verify them, and even discover company email patterns — all without leaving the conversation.</p>
+            <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #1e1e2a;">
+                <span style="color:#6366f1; font-weight:600;">Part of Pickaxes</span> — one-trick-pony MCP servers that each solve one problem really well.
+            </p>
+        </div>
+
+        <footer>
+            <p>Email Finder MCP &mdash; <a href="https://github.com/Rumblingb/email-finder-mcp">GitHub</a></p>
+            <p style="margin-top:0.5rem;">Built with the MCP SDK &middot; Powered by pattern-matching &amp; SMTP verification</p>
+        </footer>
+    </div>
+</body>
+</html>
