@@ -1,0 +1,11 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      proKey:
+        type: string
+        description: "Pro key for unlimited usage"
+        default: ""
+  commandFunction: |
+    (config) => ({command: 'python3', args: ['-m', 'email_finder_mcp', '--pro-key', config.proKey || '']})
